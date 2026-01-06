@@ -7,35 +7,43 @@ const { siteTitle } = Astro.props;
     <a href="/" class="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
       {siteTitle}
     </a>
-    <button
-      id="theme-toggle"
-      class="inline-flex items-center justify-center rounded-full p-2 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-      type="button"
-      aria-label="切换主题"
-    >
-      <span class="sr-only">切换主题</span>
-      <span class="inline-flex items-center gap-2 dark:hidden">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="stroke-current" aria-hidden="true">
-          <path d="M12 4V7" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M12 17V20" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M7 12H4" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M20 12H17" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M7.8 7.8L5.7 5.7" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M18.3 18.3L16.2 16.2" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M16.2 7.8L18.3 5.7" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M5.7 18.3L7.8 16.2" stroke-width="1.6" stroke-linecap="round" />
-          <path d="M9 12a3 3 0 0 0 6 0 3 3 0 0 0-6 0Z" stroke-width="1.6" />
-        </svg>
-      </span>
-      <span class="hidden items-center gap-2 dark:inline-flex">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="stroke-current" aria-hidden="true">
-          <path
-            d="M20 14.5A7.5 7.5 0 0 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"
-            stroke-width="1.6"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </span>
-    </button>
+    <div class="flex items-center gap-3">
+      <a
+        href="/archive/"
+        class="text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+      >
+        归档
+      </a>
+      <button
+        id="theme-toggle"
+        class="inline-flex items-center justify-center rounded-full p-2 text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+        type="button"
+        aria-label="切换主题"
+      >
+        <span class="sr-only">切换主题</span>
+        <span class="inline-flex items-center gap-2 dark:hidden">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="stroke-current" aria-hidden="true">
+            <path d="M12 4V7" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M12 17V20" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M7 12H4" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M20 12H17" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M7.8 7.8L5.7 5.7" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M18.3 18.3L16.2 16.2" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M16.2 7.8L18.3 5.7" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M5.7 18.3L7.8 16.2" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M9 12a3 3 0 0 0 6 0 3 3 0 0 0-6 0Z" stroke-width="1.6" />
+          </svg>
+        </span>
+        <span class="hidden items-center gap-2 dark:inline-flex">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="stroke-current" aria-hidden="true">
+            <path
+              d="M20 14.5A7.5 7.5 0 0 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"
+              stroke-width="1.6"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+    </div>
   </div>
 </header>
