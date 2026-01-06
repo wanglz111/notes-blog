@@ -11,14 +11,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          aws-region: auto
-
       - name: Sync content to R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
         run: |
           aws s3 sync ./src/content "s3://${{ secrets.R2_BUCKET }}/content" --endpoint-url "${{ secrets.R2_ENDPOINT }}" --delete
           aws s3 sync ./public/images "s3://${{ secrets.R2_BUCKET }}/images" --endpoint-url "${{ secrets.R2_ENDPOINT }}" --delete
