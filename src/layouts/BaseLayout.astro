@@ -1,0 +1,68 @@
+---
+import 'uno.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE_TITLE}` : SITE_TITLE;
+const pageDescription = description ?? SITE_DESCRIPTION;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <script is:inline>
+      const storageKey = 'theme';
+      const classList = document.documentElement.classList;
+      const stored = localStorage.getItem(storageKey);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="min-h-screen bg-zinc-50 font-sans text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+    <div class="flex min-h-screen flex-col">
+      <Header siteTitle={SITE_TITLE} />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <script type="module" is:inline>
+      const storageKey = 'theme';
+      const classList = document.documentElement.classList;
+      const updateLabel = () => {
+        const button = document.getElementById('theme-toggle');
+        if (!button) return;
+        const label = classList.contains('dark') ? '切换到浅色' : '切换到深色';
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
+      };
+      const toggleTheme = () => {
+        const next = classList.contains('dark') ? 'light' : 'dark';
+        classList.toggle('dark', next === 'dark');
+        localStorage.setItem(storageKey, next);
+        updateLabel();
+      };
+      const onReady = () => {
+        updateLabel();
+        document.addEventListener('click', (event) => {
+          const target = event.target?.closest?.('#theme-toggle');
+          if (!target) return;
+          toggleTheme();
+        });
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', onReady, { once: true });
+      } else {
+        onReady();
+      }
+    </script>
+  </body>
+</html>

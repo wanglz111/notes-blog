@@ -9,6 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.16.6"
+    "@unocss/astro": "^0.65.3",
+    "@unocss/preset-typography": "^0.65.3",
+    "astro": "^5.16.6",
+    "unocss": "^0.65.3"
   }
 }
