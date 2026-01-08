@@ -48,8 +48,17 @@ const formatDate = (date) =>
                   <div class="text-xs text-zinc-400 dark:text-zinc-500">
                     {formatDate(post.data.pubDate)}
                   </div>
-                  <h3 class="post-title mt-1 text-base font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-200">
-                    {post.data.title}
+                  <h3
+                    class={`post-title mt-1 text-base font-medium text-zinc-900 transition-colors group-hover:text-zinc-700 dark:text-zinc-100 dark:group-hover:text-zinc-200 ${
+                      post.data.pinned ? 'font-semibold text-zinc-950 dark:text-zinc-50' : ''
+                    }`}
+                  >
+                    <span>{post.data.title}</span>
+                    {post.data.pinned && (
+                      <span class="rounded-full border border-zinc-200/70 px-2 py-0.5 text-[11px] text-zinc-500 dark:border-zinc-700/70 dark:text-zinc-400">
+                        置顶
+                      </span>
+                    )}
                   </h3>
                   <p class="mt-2 text-sm leading-7 text-zinc-500 dark:text-zinc-400">
                     {post.data.description}
