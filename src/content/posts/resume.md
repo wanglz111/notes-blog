@@ -2,19 +2,19 @@
 title: 个人简历
 description: Lucas Wang的个人简历，涵盖教育背景、工作经历、项目经验及技能优势。
 pubDate: 2026-01-08
+pinned: true
 tags: [resume]
 ---
 
-# 简历
-
-
 ## 个人信息
 - **姓名**：Lucas Wang
+- **出生年月**：1997.9
 - **邮箱**：Lucas.wang21@foxmail.com
 - **GitHub**：[https://github.com/wanglz111](https://github.com/wanglz111)
 
 ## 教育背景
 - **硕士** | 西交利物浦大学 | 2021.9 - 2023.4
+
   **专业**：Financial Computing
 
   课程涉及：数据库、面向对象程序设计、衍生品、另类投资品等
@@ -22,6 +22,7 @@ tags: [resume]
   技能掌握：Java EE、数据库管理、金融工程相关知识等
 
 - **本科** | 南京财经大学 | 2015.9 - 2019.6
+
   **专业**：数学与应用数学
 
   课程涉及：数学分析、概率论、经济学原理、Python、Matlab编程等
