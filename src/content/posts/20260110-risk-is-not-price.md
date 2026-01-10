@@ -1,5 +1,5 @@
 ---
-title: 关于情绪、关注度与“看起来很聪明的决策”
+title: 不要因为情绪失控操作——重新理解投资中的风险与纪律
 description: 从一次真实的亏损经历出发，记录我如何重新理解投资中的情绪、关注度与长期自律。
 pubDate: 2026-01-10
 tags: [investing, psychology, risk, discipline]
