@@ -94,16 +94,7 @@ if (basisIndex !== -1) {
 
 const parseAssetLine = (line) => {
   if (line.startsWith('Simple Earn')) {
-    const total = line.match(/total=([0-9.,]+)/)?.[1] ?? '-';
-    return {
-      symbol: 'Simple Earn USDT',
-      size: '-',
-      avg: '-',
-      price: '-',
-      pnl: '-',
-      pnlRate: '-',
-      value: total,
-    };
+    return null;
   }
   const symbol = line.split(' ')[0];
   const size = line.match(/size=([^\s]+)/)?.[1] ?? '-';
@@ -135,7 +126,7 @@ const parseOperationLine = (line) => {
   };
 };
 
-const assets = sections.assets.map(parseAssetLine);
+const assets = sections.assets.map(parseAssetLine).filter(Boolean);
 const operations = sections.operations.map(parseOperationLine);
 const rawTextLiteral = JSON.stringify(rawText);
 
@@ -163,11 +154,14 @@ const navMax = Math.max(...navValues);
 const chartWidth = 360;
 const chartHeight = 120;
 const chartPadding = 10;
+const labelWidth = 38;
+const chartLeft = labelWidth;
+const chartRight = chartWidth - chartPadding;
 
 const scaleX = (index, total) => {
-  if (total <= 1) return chartPadding;
-  const usable = chartWidth - chartPadding * 2;
-  return chartPadding + (index / (total - 1)) * usable;
+  if (total <= 1) return chartLeft;
+  const usable = chartRight - chartLeft;
+  return chartLeft + (index / (total - 1)) * usable;
 };
 const scaleY = (value) => {
   if (navMax === navMin) return chartHeight / 2;
@@ -243,7 +237,7 @@ tags: [martingale, daily]
   <div class="flex flex-wrap items-center justify-between gap-4">
     <div>
       <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">收益曲线</h3>
-      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">近 7 日 NAV 走势（示意）</p>
+      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">净值走势</p>
     </div>
     <div class="text-right text-xs text-zinc-400">累计收益(未实) ${metrics.get('累计收益(未实)') ?? '-'}</div>
   </div>
@@ -261,9 +255,10 @@ tags: [martingale, daily]
     ${navTicks
       .map((tick) => {
         const y = scaleY(tick.value).toFixed(2);
+        const labelX = (chartLeft - 6).toFixed(2);
         return `<g>
-      <line x1="10" x2="350" y1="${y}" y2="${y}" stroke="currentColor" opacity="0.08" />
-      <text x="0" y="${y}" fill="currentColor" opacity="0.45" font-size="8" dominant-baseline="middle">${tick.label}</text>
+      <line x1="${chartLeft}" x2="${chartRight}" y1="${y}" y2="${y}" stroke="currentColor" opacity="0.08" />
+      <text x="${labelX}" y="${y}" fill="currentColor" opacity="0.45" font-size="8" dominant-baseline="middle" text-anchor="end">${tick.label}</text>
     </g>`;
       })
       .join('')}
@@ -278,7 +273,7 @@ tags: [martingale, daily]
     <path d="${areaPath}" fill="url(#${chartId}-fill)" />
     <circle cx="${lastX.toFixed(2)}" cy="${lastY.toFixed(2)}" r="3.5" fill="white" stroke="url(#${chartId}-line)" stroke-width="2" />
     <text
-      x="${Math.min(lastX + 6, chartWidth - 2).toFixed(2)}"
+      x="${Math.min(lastX + 6, chartRight - 2).toFixed(2)}"
       y="${Math.max(lastY - 8, 12).toFixed(2)}"
       fill="currentColor"
       font-size="9"
@@ -296,8 +291,8 @@ tags: [martingale, daily]
 
 ## 币种表现
 
-| 币种 | size | avg | price | 浮盈 | 浮盈率 | value |
-| --- | --- | --- | --- | --- | --- | --- |
+| 币种 | 数量 | 均价 | 现价 | 浮盈 | 浮盈率 | 市值 |
+| :-- | --: | --: | --: | --: | --: | --: |
 ${assets
     .map(
       (asset) =>

@@ -22,9 +22,9 @@ const formatDate = (date) =>
         记录回测与运行报告，按时间更新。
       </p>
     </div>
-    <ul class="space-y-2">
+    <ul class="space-y-3 list-none p-0">
       {reports.map((report) => (
-        <li class="text-base font-medium text-zinc-900 dark:text-zinc-100">
+        <li class="border-b border-zinc-200/60 pb-3 text-base font-medium text-zinc-900 dark:border-zinc-800 dark:text-zinc-100">
           <a
             href={`/reports/${report.slug}/`}
             class="report-link hover:text-zinc-700 dark:hover:text-zinc-200"
