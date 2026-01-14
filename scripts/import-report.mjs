@@ -29,6 +29,10 @@ const url = urlTemplate.replace('{YYYYMMDD}', dateArg);
 const slugDate = `${dateArg.slice(0, 4)}-${dateArg.slice(4, 6)}-${dateArg.slice(6, 8)}`;
 
 const response = await fetch(url);
+if (response.status === 404) {
+  console.warn(`Skip missing report: ${url}`);
+  process.exit(0);
+}
 if (!response.ok) {
   throw new Error(`Failed to fetch ${url} (${response.status})`);
 }
@@ -137,6 +141,11 @@ if (!historyResponse.ok) {
 const historyJson = await historyResponse.json();
 const entries = Array.isArray(historyJson.entries) ? historyJson.entries : [];
 const reportDate = new Date(`${slugDate}T00:00:00Z`);
+const originDate = new Date('2025-11-27T00:00:00Z');
+const dayIndex = Math.max(
+  1,
+  Math.floor((reportDate.getTime() - originDate.getTime()) / (24 * 60 * 60 * 1000)) + 1
+);
 const filtered = entries
   .filter((entry) => entry?.date && entry?.nav != null)
   .map((entry) => ({
@@ -191,7 +200,7 @@ const navTicks = [
 ];
 
 const mdx = `---
-title: 每日收益快照 · ${titleDate}
+title: 每日收益快照 · ${titleDate} · Day ${dayIndex}
 description: 自动同步生成的每日报告。
 pubDate: ${titleDate}
 sourceUrl: ${url}
@@ -202,7 +211,10 @@ tags: [martingale, daily]
   <div class="flex flex-wrap items-center justify-between gap-4">
     <div>
       <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Daily Snapshot</p>
-      <h2 class="mt-2 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">收益概览</h2>
+      <h2 class="mt-2 text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
+        收益概览
+        <span class="ml-2 text-sm font-medium text-zinc-400">Day ${dayIndex}</span>
+      </h2>
       <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
         每日 00:00 UTC+0 快照，现货价折算，仅作记录展示。
       </p>
