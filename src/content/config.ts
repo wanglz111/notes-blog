@@ -11,4 +11,15 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const reports = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.date(),
+    sourceUrl: z.string().optional(),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { posts, reports };

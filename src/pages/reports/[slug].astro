@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const reports = await getCollection('reports');
+  return reports.map((report) => ({
+    params: { slug: report.slug },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+const { Content } = await report.render();
+
+const formatDate = (date) =>
+  new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+---
+
+<BaseLayout title={report.data.title} description={report.data.description} bodyClass="report-body">
+  <section class="report-page">
+    <article class="mx-auto max-w-[900px] px-6 pb-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+        {report.data.title}
+      </h1>
+    </div>
+      <div class="prose prose-zinc max-w-none dark:prose-invert prose-pre:bg-zinc-900/95 prose-pre:text-zinc-100 dark:prose-pre:bg-zinc-900">
+        <Content />
+      </div>
+    </article>
+  </section>
+</BaseLayout>

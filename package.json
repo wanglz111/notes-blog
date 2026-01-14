@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.4",
     "@unocss/astro": "^0.65.3",
     "@unocss/preset-typography": "^0.65.3",
     "astro": "^5.16.6",

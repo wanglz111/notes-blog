@@ -1,0 +1,48 @@
+name: Sync Daily Report
+
+on:
+  schedule:
+    - cron: '20 1 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Report date (YYYYMMDD)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Import report
+        env:
+          REPORT_DATE: ${{ inputs.date }}
+        run: |
+          DATE=${REPORT_DATE:-$(date -u +%Y%m%d)}
+          node scripts/import-report.mjs --date "$DATE"
+
+      - name: Commit changes
+        env:
+          REPORT_DATE: ${{ inputs.date }}
+        run: |
+          DATE=${REPORT_DATE:-$(date -u +%Y%m%d)}
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/content/reports
+          git commit -m "chore: sync daily report ${DATE}"
+          git push
