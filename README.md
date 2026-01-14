@@ -1,6 +1,6 @@
 # Astro 技术博客
 
-极简、现代、克制的技术博客。内容基于 Markdown + Astro Content Collections，构建为纯静态站点。
+极简、现代、克制的技术博客。内容基于 Markdown/MDX + Astro Content Collections，构建为纯静态站点。新增「每日收益快照」栏目，用于自动同步并展示策略日报。
 
 ## 开发
 
@@ -30,6 +30,27 @@ git commit -m "feat: new post"
 git push
 ```
 
+## 每日收益快照
+
+报告内容存放在 `src/content/reports/`，使用 MDX 渲染，可包含表格与图表。
+
+手动拉取某天报告：
+
+```bash
+node scripts/import-report.mjs --date 20260114
+```
+
+脚本会读取：
+
+- 单日报告：`https://logs.gleaftex.com/runs/fa888/martingale/reports/report_{YYYYMMDD}.txt`
+- 历史净值：`https://logs.gleaftex.com/runs/fa888/martingale/reports/history.json`
+
+如果日报文件不存在（404），脚本会跳过而不中断。
+
+### 自动同步
+
+GitHub Actions 每天定时拉取并提交（UTC 01:20），见 `.github/workflows/report-sync.yml`。
+
 ## 部署到 Vercel
 
 1. 在 Vercel 中导入仓库
@@ -57,6 +78,7 @@ GitHub Actions 在 main 分支 push 时会同步：
 src/
   content/
     posts/
+    reports/
   components/
   layouts/
   pages/
