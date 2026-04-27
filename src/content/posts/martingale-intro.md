@@ -2,7 +2,6 @@
 title: VWAP 锚定 · 趋势回撤承接策略
 description: 一种基于总仓位均价（VWAP）锚定的自动化交易思路，专注于趋势中的回撤承接与周期性结算。
 pubDate: 2026-01-06
-pinned: true
 tags: [trading, strategy, vwap]
 ---
 
