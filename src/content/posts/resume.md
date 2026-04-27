@@ -1,7 +1,7 @@
 ---
 title: 个人简历
 description: Lucas Wang的个人简历，涵盖教育背景、工作经历、项目经验及技能优势。
-pubDate: 2026-01-08
+pubDate: 2026-04-27
 pinned: true
 tags: [resume]
 ---

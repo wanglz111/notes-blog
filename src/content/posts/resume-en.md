@@ -1,7 +1,8 @@
 ---
 title: Resume
 description: Lucas Wang's resume covering education, professional experience, projects, and core skills.
-pubDate: 2026-01-08
+pubDate: 2026-04-27
+pinned: true
 tags: [resume, english]
 ---
 
